@@ -1,13 +1,17 @@
 import React from 'react'
-import axios from 'axios'
 
-const DepartmentsView = ({departments})=>{
+
+const DepartmentsView = ({departments,selectedDept})=>{
   return (
-    <ul>
-    {departments.map(department=> {
-      return <li>{department.name.toUpperCase()}</li>
-    })}
-    </ul>
+    departments.map(department=> {
+      return (
+      <div>
+        <ul onClick={()=> {selectedDept(department.id)}}>
+        <li key={department.id}> {department.name.toUpperCase()} </li>
+        </ul>
+      </div>
+      )
+    })
   )
 }
 

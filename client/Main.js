@@ -1,6 +1,7 @@
 import React from 'react'
 import axios from 'axios'
 import DepartmentsView from './Departments'
+import SelectedDepartment from './Department'
 
 export default class Main extends React.Component {
   constructor() {
@@ -9,30 +10,41 @@ export default class Main extends React.Component {
       departments: [],
       selectedDept: {}
     }
-    this.Users = this.Users.bind(this)
+    this.users = this.users.bind(this)
   }
 
   async componentDidMount() {
-    let response = await axios.get('/api/departments')
-    let departments = response.data
-    this.setState({
-      departments: departments
-    })
+    try{
+      let response = await axios.get('/api/departments')
+      let departments = response.data
+      this.setState({
+        departments: departments
+      })
+      console.log('this is state departments', this.state.departments)
+    } catch (err){
+      console.log(err)
+    }
+  }
+  users(deptId){
+    return axios.get(`/api/departments/${deptId}`)
+      .then ((response)=> {
+        this.setState({
+          selectedDept: response.data
+        },()=> console.log('updated', this.state.selectedDept))
+      })
+      .catch(err => console.log(err))
   }
 
-  async Users(deptId){
-    let response = await axios.get(`/api/departments/${deptId}`)
-    let users = response.data
-    this.setState({
-      selectedDept: users
-    })
-  }
+
 
   render() {
     let view;
     if(!this.state.selectedDept){
-      view = <DepartmentsView departments={this.state.departments}/>
+      view = <DepartmentsView departments={this.state.departments} selectedDept={this.users}/>
+    } else {
+      view = <SelectedDepartment department={this.state.selectedDept} />
     }
+
     return (
 
       <div id='app'>
@@ -41,7 +53,7 @@ export default class Main extends React.Component {
         </div>
 
         <div>
-        <DepartmentsView departments={this.state.departments}/>
+        {view}
         </div>
 
       </div>
