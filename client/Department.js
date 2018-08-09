@@ -2,18 +2,26 @@ import React from 'react'
 import Users from './Users'
 
 const SelectedDepartment = ({department})=> {
-  console.log('department', department)
   return (
     <div>
       <div>
-        <h3>Name</h3>
+        <h3>{department.name.toUpperCase()}</h3>
         <hr/>
       </div>
       <div>
-        <Users key={department.id} users={department.users} />
+      {department.users.map(user => {
+      return (
+        <div>
+          <ul>
+            <li key={user.id}>{user.name.toUpperCase()}</li>
+          </ul>
+          <hr/>
+        </div>
+      )
+    })}
       </div>
       <div>
-        Back
+        <a href='/'>Back</a>
       </div>
     </div>
   )
