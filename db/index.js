@@ -27,8 +27,8 @@ return db.sync({force:true})
 }
 
 const seed = async()=> {
-  const users = ['moe', 'larry','curly']
-  const departments = ['hr','admin','engineer']
+  const users = ['Moe', 'Larry','Curly']
+  const departments = ['HR','Admin','Engineering']
   try{
 
 

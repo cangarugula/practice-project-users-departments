@@ -1,11 +1,10 @@
 import React from 'react'
-import Users from './Users'
 
 const SelectedDepartment = ({department})=> {
   return (
     <div>
       <div>
-        <h3>{department.name.toUpperCase()}</h3>
+        <h3>{department.name}</h3>
         <hr/>
       </div>
       <div>
@@ -13,7 +12,7 @@ const SelectedDepartment = ({department})=> {
       return (
         <div>
           <ul>
-            <li key={user.id}>{user.name.toUpperCase()}</li>
+            <li key={user.id}>{user.name}</li>
           </ul>
           <hr/>
         </div>

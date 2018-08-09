@@ -38,7 +38,15 @@ app.get(`/api/departments/:id`,async (req,res,next)=> {
   } catch (err) {
     next(err)
   }
+})
 
+app.get('/api/users',async (req,res,next)=> {
+  try{
+    let users = await User.findAll({
+      include: [Department]
+    })
+    res.send(users)
+  } catch (err) { next(err)}
 })
 
 syncAndSeed()

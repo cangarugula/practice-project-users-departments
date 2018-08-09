@@ -8,32 +8,47 @@ export default class Main extends React.Component {
     super()
     this.state = {
       departments: [],
-      selectedDept: {}
+      selectedDept: {},
+      users: []
     }
-    this.users = this.users.bind(this)
+    this.selectedDept = this.selectedDept.bind(this)
   }
 
   async componentDidMount() {
     try{
-      let response = await axios.get('/api/departments')
-      let departments = response.data
+      let _departments = await axios.get('/api/departments')
+      let departments = _departments.data
+      let _users = await axios.get('/api/users')
+      let users = _users.data
       this.setState({
-        departments: departments
+        departments: departments,
+        users: users
       })
     } catch (err){
       console.log(err)
     }
   }
-  async users(deptId){
+  async selectedDept(deptId){
     try{
       let response = await axios.get(`/api/departments/${deptId}`)
-    this.setState({
-      selectedDept: response.data
-    })
+      this.setState({
+        selectedDept: response.data
+      })
     } catch (err){
       console.log(err)
     }
   }
+
+  // async users() {
+  //   try{
+  //     let response = await axios.get('/api/users')
+  //     this.setState({
+  //       users: response.data
+  //     })
+  //   } catch (err){
+  //     console.log(err)
+  //   }
+  // }
 
 
 
@@ -46,7 +61,7 @@ export default class Main extends React.Component {
         </div>
 
         <div>
-          {this.state.selectedDept.id ? <SelectedDepartment department={this.state.selectedDept}/> : (<DepartmentsView departments={this.state.departments} users={this.users} />)}
+          {this.state.selectedDept.id ? <SelectedDepartment department={this.state.selectedDept}/> : (<DepartmentsView departments={this.state.departments} selectedDept={this.selectedDept} users={this.state.users} />)}
         </div>
       </div>
     )
